@@ -1,0 +1,134 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
+
+:root {
+    ---rosa-claro: #e0699b;
+    ---rosa: #e41e70;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sofia', cursive;
+}
+
+body {
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: #31065a;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.icon {
+    fill: transparent;
+    stroke: var(---rosa);
+    stroke-width: 25;
+    cursor: pointer;
+    position: relative;
+}
+
+.icon svg {
+    overflow: visible;
+    width: 15rem;
+}
+
+.icon path {
+    stroke-dasharray: 1550;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+}
+
+.icon .heart-background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    stroke: none;
+}
+
+.icon .heart-main:hover path {
+    animation: stroke-ani 5s ease-in-out forwards;
+}
+
+.icon .heart-main:hover~.heart-background path {
+    animation: fade-ani 5s ease-in-out forwards;
+}
+
+@keyframes stroke-ani {
+    0% {
+        stroke-dashoffset: 10;
+    }
+
+    30% {
+        stroke-dashoffset: 1600;
+    }
+
+    60% {
+        stroke-dashoffset: 3100;
+        fill: transparent;
+        transform: scale(1);
+    }
+
+    80% {
+        fill: var(---rosa);
+        transform: scale(1.5);
+    }
+
+    90% {
+        transform: scale(2);
+    }
+
+    100% {
+        stroke-dashoffset: 3100;
+        fill: var(---rosa);
+    }
+
+}
+
+@keyframes fade-ani {
+    70% {
+        fill: transparent;
+        transform: scale(1.5);
+    }
+
+    80% {
+        fill: var(---rosa-claro);
+        transform: scale(2);
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+
+}
+
+.Conteiner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Text {
+    color: #ffffff;
+    text-align: center;
+    font-size: 2rem;
+}
+
+@media (max-width: 500px) {
+    .Text {
+        font-size: 1.5rem;
+    }
+}
