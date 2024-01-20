@@ -9,8 +9,7 @@ window.requestAnimationFrame =
         return function (callback, element) {
             var lastTime = element.__lastTime;
             if (lastTime === undefined) {
-                lastTime =
-                    0;
+                lastTime = 0;
             }
             var currTime = Date.now();
             var timeToCall = Math.max(1, 33 - (currTime - lastTime));
@@ -18,7 +17,6 @@ window.requestAnimationFrame =
             element.__lastTime = currTime + timeToCall;
         };
     })();
-
 window.isDevice =
     (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(((navigator.userAgent
         || navigator.vendor || window.opera)).toLowerCase()));
@@ -37,30 +35,33 @@ var init = function () {
     ctx.fillRect(0, 0, width, height);
 
     var heartPosition = function (rad) {
+        //return [Math.sin(rad), Math.cos(rad)];
         return [Math.pow(Math.sin(rad), 3),
         -(15 * Math.cos(rad) - 5 *
             Math.cos(2 * rad) - 2 *
             Math.cos(3 * rad) - Math.cos(4 * rad))];
     };
-    var ScaleAndTraslate = function (pos, sx, sy, dx, dy) {
+    var scaleAndTranslate = function (pos, sx, sy, dx, dy) {
         return [dx + pos[0] * sx, dy + pos[1] * sy];
     };
+
     window.addEventListener('resize', function () {
         width = canvas.width = koef * innerWidth;
         height = canvas.height = koef * innerHeight;
-        ctx.fillStyle = "rgba(0, 0, 0,1)";
+        ctx.fillStyle = "rgba(0,0,0,1)";
         ctx.fillRect(0, 0, width, height);
     });
+
     var traceCount = mobile ? 20 : 50;
     var pointsOrigin = [];
     var i;
     var dr = mobile ? 0.3 : 0.1;
     for (i = 0; i < Math.PI * 2; i += dr)
-        pointsOrigin.push(ScaleAndTraslate(heartPosition(i), 210, 13, 0, 0));
+        pointsOrigin.push(scaleAndTranslate(heartPosition(i), 210, 13, 0, 0));
     for (i = 0; i < Math.PI * 2; i += dr)
-        pointsOrigin.push(ScaleAndTraslate(heartPosition(i), 150, 9, 0, 0));
+        pointsOrigin.push(scaleAndTranslate(heartPosition(i), 150, 9, 0, 0));
     for (i = 0; i < Math.PI * 2; i += dr)
-        pointsOrigin.push(ScaleAndTraslate(heartPosition(i), 90, 5, 0, 0));
+        pointsOrigin.push(scaleAndTranslate(heartPosition(i), 90, 5, 0, 0));
     var heartPointsCount = pointsOrigin.length;
 
     var targetPoints = [];
@@ -71,6 +72,7 @@ var init = function () {
             targetPoints[i][1] = ky * pointsOrigin[i][1] + height / 2;
         }
     };
+
     var e = [];
     for (i = 0; i < heartPointsCount; i++) {
         var x = rand() * width;
@@ -83,21 +85,23 @@ var init = function () {
             q: ~~(rand() * heartPointsCount),
             D: 2 * (i % 2) - 1,
             force: 0.2 * rand() + 0.7,
-            f: "hsla(0," + ~~(40 * rand()) + "%," + ~~(60 * rand() + 20) + "%,.3)",
+            f: "hsla(0," + ~~(40 * rand() + 60) + "%," + ~~(60 * rand() + 20) + "%,.3)",
             trace: []
         };
         for (var k = 0; k < traceCount; k++) e[i].trace[k] = { x: x, y: y };
     }
+
     var config = {
-        tracek: 0.4,
+        traceK: 0.4,
         timeDelta: 0.01
     };
+
     var time = 0;
     var loop = function () {
         var n = -Math.cos(time);
         pulse((1 + n) * .5, (1 + n) * .5);
         time += ((Math.sin(time)) < 0 ? 9 : (n > 0.8) ? .2 : 1) * config.timeDelta;
-        ctx.fillStyle = "rgba(0,0,0,.2)";
+        ctx.fillStyle = "rgba(0,0,0,.1)";
         ctx.fillRect(0, 0, width, height);
         for (i = e.length; i--;) {
             var u = e[i];
@@ -129,21 +133,26 @@ var init = function () {
             for (k = 0; k < u.trace.length - 1;) {
                 var T = u.trace[k];
                 var N = u.trace[++k];
-                N.x -= config.tracek * (N.x - T.x);
-                N.y -= config.tracek * (N.y - T.y);
+                N.x -= config.traceK * (N.x - T.x);
+                N.y -= config.traceK * (N.y - T.y);
             }
             ctx.fillStyle = u.f;
             for (k = 0; k < u.trace.length; k++) {
                 ctx.fillRect(u.trace[k].x, u.trace[k].y, 1, 1);
             }
         }
+        //ctx.fillStyle = "rgba(255,255,255,1)";
+        //for (i = u.trace.length; i--;) ctx.fillRect(targetPoints[i][0], targetPoints[i][1], 2, 2);
+
         window.requestAnimationFrame(loop, canvas);
     };
     loop();
 };
+
 var s = document.readyState;
 if (s === 'complete' || s === 'loaded' || s === 'interactive') init();
 else document.addEventListener('DOMContentLoaded', init, false);
+
 
 function PlayAudio() {
     document.getElementById("Audio2").play();
