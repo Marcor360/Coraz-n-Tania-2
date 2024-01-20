@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Poema</title>
+    <style>
+        :root {
+            ---color1: rgba(203, 6, 0.1);
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(---color1);
+        }
+    </style>
+</head>
+
+<body onclick="PlayAudio()">
+    <canvas id="heart"></canvas>
+    <audio id="Audio2" loop>
+        <source src="../SONG/2.mp3" type="audio/mpeg">
+    </audio>
+    <script src="../JS/scrip.js"></script>
+</body>
+
+</html>

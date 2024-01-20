@@ -1,16 +1,23 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Courgette&display=swap');
+
+
+
+
 :root {
     ---rosa-claro: #e0699b;
     ---rosa: #e41e70;
+    ---Texto2: 'Courgette', cursive;
+    ---TextoP: 'Sofia', cursive;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Sofia', cursive;
+    font-family: var(---TextoP);
 }
 
 body {
@@ -19,6 +26,10 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #31065a;
+}
+
+a {
+    text-decoration: none;
 }
 
 *::before,
@@ -116,6 +127,8 @@ body {
 }
 
 .Conteiner {
+    margin: 0, 0;
+    padding: 0, 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,4 +144,27 @@ body {
     .Text {
         font-size: 1.5rem;
     }
+}
+
+.Boton {
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.Boton:hover {
+    background-color: #e41e70;
+    transition: background-color .3 step-end;
+}
+
+.Sp {
+    font-size: 4rem;
+
+}
+
+.PP {
+    font-size: 2rem;
+    font-family: var(---Texto2);
 }
